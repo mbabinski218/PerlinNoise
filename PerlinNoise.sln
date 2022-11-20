@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interface", "PerlinNoise\Interface.csproj", "{640703B8-FF88-4B64-B00A-8598B133EEE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerlinNoiseCsLibrary", "PerlinNoiseCsLibrary\PerlinNoiseCsLibrary.csproj", "{10387E91-E85C-459C-BB4F-9122ECE7DACB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PerlinNoiseAsmLibrary", "PerlinNoiseAsmLibrary\PerlinNoiseAsmLibrary.vcxproj", "{28F81887-1944-41EB-9F4B-75B5F99F8BEA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{640703B8-FF88-4B64-B00A-8598B133EEE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{640703B8-FF88-4B64-B00A-8598B133EEE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{640703B8-FF88-4B64-B00A-8598B133EEE2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{640703B8-FF88-4B64-B00A-8598B133EEE2}.Debug|x64.Build.0 = Debug|Any CPU
+		{640703B8-FF88-4B64-B00A-8598B133EEE2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{640703B8-FF88-4B64-B00A-8598B133EEE2}.Debug|x86.Build.0 = Debug|Any CPU
+		{640703B8-FF88-4B64-B00A-8598B133EEE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{640703B8-FF88-4B64-B00A-8598B133EEE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{640703B8-FF88-4B64-B00A-8598B133EEE2}.Release|x64.ActiveCfg = Release|Any CPU
+		{640703B8-FF88-4B64-B00A-8598B133EEE2}.Release|x64.Build.0 = Release|Any CPU
+		{640703B8-FF88-4B64-B00A-8598B133EEE2}.Release|x86.ActiveCfg = Release|Any CPU
+		{640703B8-FF88-4B64-B00A-8598B133EEE2}.Release|x86.Build.0 = Release|Any CPU
+		{10387E91-E85C-459C-BB4F-9122ECE7DACB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10387E91-E85C-459C-BB4F-9122ECE7DACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10387E91-E85C-459C-BB4F-9122ECE7DACB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{10387E91-E85C-459C-BB4F-9122ECE7DACB}.Debug|x64.Build.0 = Debug|Any CPU
+		{10387E91-E85C-459C-BB4F-9122ECE7DACB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{10387E91-E85C-459C-BB4F-9122ECE7DACB}.Debug|x86.Build.0 = Debug|Any CPU
+		{10387E91-E85C-459C-BB4F-9122ECE7DACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10387E91-E85C-459C-BB4F-9122ECE7DACB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10387E91-E85C-459C-BB4F-9122ECE7DACB}.Release|x64.ActiveCfg = Release|Any CPU
+		{10387E91-E85C-459C-BB4F-9122ECE7DACB}.Release|x64.Build.0 = Release|Any CPU
+		{10387E91-E85C-459C-BB4F-9122ECE7DACB}.Release|x86.ActiveCfg = Release|Any CPU
+		{10387E91-E85C-459C-BB4F-9122ECE7DACB}.Release|x86.Build.0 = Release|Any CPU
+		{28F81887-1944-41EB-9F4B-75B5F99F8BEA}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{28F81887-1944-41EB-9F4B-75B5F99F8BEA}.Debug|Any CPU.Build.0 = Debug|x64
+		{28F81887-1944-41EB-9F4B-75B5F99F8BEA}.Debug|x64.ActiveCfg = Debug|x64
+		{28F81887-1944-41EB-9F4B-75B5F99F8BEA}.Debug|x64.Build.0 = Debug|x64
+		{28F81887-1944-41EB-9F4B-75B5F99F8BEA}.Debug|x86.ActiveCfg = Debug|Win32
+		{28F81887-1944-41EB-9F4B-75B5F99F8BEA}.Debug|x86.Build.0 = Debug|Win32
+		{28F81887-1944-41EB-9F4B-75B5F99F8BEA}.Release|Any CPU.ActiveCfg = Release|x64
+		{28F81887-1944-41EB-9F4B-75B5F99F8BEA}.Release|Any CPU.Build.0 = Release|x64
+		{28F81887-1944-41EB-9F4B-75B5F99F8BEA}.Release|x64.ActiveCfg = Release|x64
+		{28F81887-1944-41EB-9F4B-75B5F99F8BEA}.Release|x64.Build.0 = Release|x64
+		{28F81887-1944-41EB-9F4B-75B5F99F8BEA}.Release|x86.ActiveCfg = Release|Win32
+		{28F81887-1944-41EB-9F4B-75B5F99F8BEA}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A4A239BF-959A-42CB-8210-42C596A2FB9D}
+	EndGlobalSection
+EndGlobal
