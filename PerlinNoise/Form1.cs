@@ -84,8 +84,8 @@ namespace Interface
                 stopWatch.Start();
                 var perlinNoiseArray = perlinNoise.Generate();
                 stopWatch.Stop();
-                pictureBox.Image = Utility.MakeBmp(ref perlinNoiseArray, _width, _height);
 
+                pictureBox.Image = Utility.MakeBmp(ref perlinNoiseArray, _width, _height);
                 saveButton.Enabled = true;
                 PictureGroupBox.Visible = true;
                 var ts = stopWatch.Elapsed;
@@ -112,7 +112,6 @@ namespace Interface
         }
     }
 
-    // usunac -------------------------------------
     public static class Env
     {
 #if DEBUG

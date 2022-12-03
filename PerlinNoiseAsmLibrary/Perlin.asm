@@ -1,7 +1,7 @@
 ; Temat:  Szum Perlina
 ; Opis:	  Algorytm generuje wartość szumu Perlina dla konkretnego piksela
 ; Autor:  Mateusz Babiński, Informatyka, rok 3, sem. 5, gr. 5, data: 24.10.2022
-; Wersja: 0.3
+; Wersja: 0.4
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .data?
@@ -10,8 +10,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .const
 	vector11	   REAL4 1.0, 1.0		    ; vector2d z x = 1, y = 1
-	w			   DWORD 8 * sizeof DWORD	; 8 * sizeof(int)
-	s			   DWORD 4 * sizeof DWORD	; w / 2 - szerokość obrotu
 	pi			   REAL8 3.141592653589793  ; pi
 	intMaxPlusOne  REAL8 2147483648.0       ; maksymalna wartość integera + 1
 	three		   REAL4 3.0
@@ -126,12 +124,6 @@ CalculatePerlinNoiseValueForPixel PROC
 	addps    xmm3, vector11  ; xmm3 = vec2  
 	movaps   xmm4, xmm1      
 	subps    xmm4, xmm2	     ; xmm4 = lerpWeights	   
-
-	; pobrać dane z xmm15, xmm6, xmm13 i xmm14
-	pxor xmm6, xmm6
-	pxor xmm13, xmm13
-	pxor xmm14, xmm14
-	pxor xmm15, xmm15
 
 	; obliczanie wartości y dla wektora n1
 	movss    xmm15, xmm3      
