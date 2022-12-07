@@ -20,13 +20,13 @@ namespace Interface
         private double _persistence = 0.001;
 
         // Szerokość wygenerowanego obrazu.
-        private int _width = 256;
-
-        // Wysokość wygenerowanego obrazu.
-        private int _height = 256;
+        private int _size = 1024;
 
         // W jakim języku będzie napisana bibloteka użyta do generowania szumu Perlina.
         private Library _library = Library.Assembly;
+
+        // Przechowuje obraz bmp
+        private MemoryStream _stream = new();
 
         public Form1()
         {
@@ -51,14 +51,9 @@ namespace Interface
             persistenceLevelLabel.Text = _persistence.ToString();
         }
 
-        private void heightNumericUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            _height = (int)heightNumericUpDown.Value;
-        }
-
         private void widthNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            _width = (int)widthNumericUpDown.Value;
+            _size = (int)widthNumericUpDown.Value;
         }
 
         private void AssemblerRadioButton_CheckedChanged(object sender, EventArgs e)
@@ -77,7 +72,7 @@ namespace Interface
         private void GenerateButton_Click(object sender, EventArgs e)
         {
             var stopWatch = new Stopwatch();
-            var perlinNoise = new PerlinNoise(_numberOfThreads, _octaves, _persistence, _width, _height, _library);
+            var perlinNoise = new PerlinNoise(_numberOfThreads, _octaves, _persistence, _size, _library);
 
             try
             {
@@ -85,7 +80,8 @@ namespace Interface
                 var perlinNoiseArray = perlinNoise.Generate();
                 stopWatch.Stop();
 
-                pictureBox.Image = Utility.MakeBmp(ref perlinNoiseArray, _width, _height);
+                Utility.MakeBmp(ref perlinNoiseArray, _size, ref _stream);
+                pictureBox.Image = Image.FromStream(_stream);
                 saveButton.Enabled = true;
                 PictureGroupBox.Visible = true;
                 var ts = stopWatch.Elapsed;

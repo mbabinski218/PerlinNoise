@@ -37,9 +37,6 @@
             this.AsemblerRadioButton = new System.Windows.Forms.RadioButton();
             this.SizeGroupBox = new System.Windows.Forms.GroupBox();
             this.widthNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.heightNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.numberOfOctavesLabel = new System.Windows.Forms.Label();
             this.octavesTrackBar = new System.Windows.Forms.TrackBar();
@@ -57,7 +54,6 @@
             this.LibraryGroupBox.SuspendLayout();
             this.SizeGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.widthNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.heightNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.octavesTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.persistenceTrackBar)).BeginInit();
             this.PictureGroupBox.SuspendLayout();
@@ -106,7 +102,7 @@
             this.LibraryGroupBox.Controls.Add(this.AsemblerRadioButton);
             this.LibraryGroupBox.Location = new System.Drawing.Point(12, 12);
             this.LibraryGroupBox.Name = "LibraryGroupBox";
-            this.LibraryGroupBox.Size = new System.Drawing.Size(240, 102);
+            this.LibraryGroupBox.Size = new System.Drawing.Size(198, 102);
             this.LibraryGroupBox.TabIndex = 3;
             this.LibraryGroupBox.TabStop = false;
             this.LibraryGroupBox.Text = "Biblioteka";
@@ -138,69 +134,30 @@
             // SizeGroupBox
             // 
             this.SizeGroupBox.Controls.Add(this.widthNumericUpDown);
-            this.SizeGroupBox.Controls.Add(this.heightNumericUpDown);
-            this.SizeGroupBox.Controls.Add(this.label5);
-            this.SizeGroupBox.Controls.Add(this.label4);
-            this.SizeGroupBox.Location = new System.Drawing.Point(282, 12);
+            this.SizeGroupBox.Location = new System.Drawing.Point(232, 12);
             this.SizeGroupBox.Name = "SizeGroupBox";
-            this.SizeGroupBox.Size = new System.Drawing.Size(269, 102);
+            this.SizeGroupBox.Size = new System.Drawing.Size(196, 102);
             this.SizeGroupBox.TabIndex = 4;
             this.SizeGroupBox.TabStop = false;
             this.SizeGroupBox.Text = "Rozmiar";
             // 
             // widthNumericUpDown
             // 
-            this.widthNumericUpDown.Location = new System.Drawing.Point(116, 24);
+            this.widthNumericUpDown.Location = new System.Drawing.Point(6, 30);
             this.widthNumericUpDown.Maximum = new decimal(new int[] {
             10240,
             0,
             0,
             0});
             this.widthNumericUpDown.Name = "widthNumericUpDown";
-            this.widthNumericUpDown.Size = new System.Drawing.Size(136, 31);
+            this.widthNumericUpDown.Size = new System.Drawing.Size(184, 31);
             this.widthNumericUpDown.TabIndex = 12;
             this.widthNumericUpDown.Value = new decimal(new int[] {
-            256,
+            1024,
             0,
             0,
             0});
             this.widthNumericUpDown.ValueChanged += new System.EventHandler(this.widthNumericUpDown_ValueChanged);
-            // 
-            // heightNumericUpDown
-            // 
-            this.heightNumericUpDown.Location = new System.Drawing.Point(116, 61);
-            this.heightNumericUpDown.Maximum = new decimal(new int[] {
-            10240,
-            0,
-            0,
-            0});
-            this.heightNumericUpDown.Name = "heightNumericUpDown";
-            this.heightNumericUpDown.Size = new System.Drawing.Size(136, 31);
-            this.heightNumericUpDown.TabIndex = 12;
-            this.heightNumericUpDown.Value = new decimal(new int[] {
-            256,
-            0,
-            0,
-            0});
-            this.heightNumericUpDown.ValueChanged += new System.EventHandler(this.heightNumericUpDown_ValueChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 27);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(91, 25);
-            this.label5.TabIndex = 12;
-            this.label5.Text = "Szerokość";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 63);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(93, 25);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "Wysokość";
             // 
             // label3
             // 
@@ -264,9 +221,9 @@
             // PictureGroupBox
             // 
             this.PictureGroupBox.Controls.Add(this.pictureBox);
-            this.PictureGroupBox.Location = new System.Drawing.Point(12, 305);
+            this.PictureGroupBox.Location = new System.Drawing.Point(130, 305);
             this.PictureGroupBox.Name = "PictureGroupBox";
-            this.PictureGroupBox.Size = new System.Drawing.Size(1290, 827);
+            this.PictureGroupBox.Size = new System.Drawing.Size(1049, 827);
             this.PictureGroupBox.TabIndex = 13;
             this.PictureGroupBox.TabStop = false;
             this.PictureGroupBox.Text = "Wygenerowany obraz";
@@ -276,7 +233,7 @@
             // 
             this.pictureBox.Location = new System.Drawing.Point(17, 30);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(1253, 775);
+            this.pictureBox.Size = new System.Drawing.Size(1014, 775);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
@@ -284,7 +241,7 @@
             // GenerateButton
             // 
             this.GenerateButton.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.GenerateButton.Location = new System.Drawing.Point(677, 22);
+            this.GenerateButton.Location = new System.Drawing.Point(764, 22);
             this.GenerateButton.Name = "GenerateButton";
             this.GenerateButton.Size = new System.Drawing.Size(234, 92);
             this.GenerateButton.TabIndex = 0;
@@ -296,7 +253,7 @@
             // 
             this.saveButton.Enabled = false;
             this.saveButton.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.saveButton.Location = new System.Drawing.Point(948, 22);
+            this.saveButton.Location = new System.Drawing.Point(1021, 22);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(239, 92);
             this.saveButton.TabIndex = 14;
@@ -360,9 +317,7 @@
             this.LibraryGroupBox.ResumeLayout(false);
             this.LibraryGroupBox.PerformLayout();
             this.SizeGroupBox.ResumeLayout(false);
-            this.SizeGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.widthNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.heightNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.octavesTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.persistenceTrackBar)).EndInit();
             this.PictureGroupBox.ResumeLayout(false);
@@ -388,7 +343,6 @@
         private Label label6;
         private TrackBar persistenceTrackBar;
         private Label persistenceLevelLabel;
-        private Label label5;
         private Label label4;
         private NumericUpDown widthNumericUpDown;
         private NumericUpDown heightNumericUpDown;

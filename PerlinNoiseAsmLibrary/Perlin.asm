@@ -69,7 +69,7 @@ RandomGradient PROC
 
 	movsd    xmm15, pi
 	movsd    xmm0, intMaxPlusOne
-	divsd    xmm15, xmm0		  ; w dolnych 64 bitach xmm15 znajduje się wartość pi/2147483648.0
+	divsd    xmm15, xmm0		  ; w dolnych 64 bitach xmm15 znajduje się wartość pi/intMaxPlusOne
 	cvtdq2pd xmm0, xmm13		  ; wpisanie w dolne 64 bity xmm0 wartości z xmm13
 	mulsd	 xmm15, xmm0		  ; pomnożenie pierwszych 64 bitów xmm15 przez dolne 64 bity xmm0 oraz zapisanie wyniku w xmm15
 	cvtsd2ss xmm15, xmm15		  ; konwersja pierwszych 64 bitów xmm15 na wartość zmiennoprzecinkową pojedyńczej precyzji i wpisanie jej w pierwsze 32 bity rejestru xmm15

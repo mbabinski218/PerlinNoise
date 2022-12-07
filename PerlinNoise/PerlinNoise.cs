@@ -15,11 +15,8 @@ namespace Interface
         // Określa, w jakim stopniu każda oktawa ma wpływ na ogólny kształt (reguluję amplitudę).
         private double Persistence { get; }
 
-        // Szerokość wygenerowanego obrazu.
-        private int Width{ get; }
-
-        // Wysokość wygenerowanego obrazu.
-        private int Height{ get; }
+        // Rozmiar obrazu
+        private int Size{ get; }
 
         // Generator liczb pseudolosowych.
         private Random Random { get; }
@@ -27,13 +24,12 @@ namespace Interface
         // Funckja, która zostanie wywołana do generowania konkretnej wartości tablicy szumu Perlina.
         private Func<int, Vector2, float> CalculatePerlinNoiseValueForPixelFunc { get; }
 
-        public PerlinNoise(int numberOfThreads, int octaves, double persistence, int width, int height, Library library)
+        public PerlinNoise(int numberOfThreads, int octaves, double persistence, int size, Library library)
         {
             NumberOfThreads = numberOfThreads;
             Octaves = octaves;
             Persistence = persistence;
-            Width = width;
-            Height = height;
+            Size = size;
             Random = new Random();
 
             CalculatePerlinNoiseValueForPixelFunc = library switch
@@ -50,12 +46,12 @@ namespace Interface
         // Metoda rozdziela pomiędzy wątki ilość wartości szumu Perlina do obliczenia.
         public float[] Generate()
         {
-            var output = new float[Width * Height];
+            var output = new float[Size * Size];
             var seed = Utility.GetRandomNumberInRange(Random, 1911520717, int.MaxValue);
             var tasks = new List<Task>();
 
-            var package = Height / NumberOfThreads;
-            var rest = Height % NumberOfThreads;
+            var package = Size / NumberOfThreads;
+            var rest = Size % NumberOfThreads;
 
             var packageForTask = Enumerable.Repeat(package, NumberOfThreads).ToArray();
 
@@ -69,7 +65,7 @@ namespace Interface
                 var fromHeight = packageForTask.Take(i).Sum();
                 var toHeight = packageForTask[i];
 
-                tasks.Add(Task.Run(() => CreatePerlinNoiseArray(ref output, fromHeight, toHeight, (int)seed)));
+                tasks.Add(Task.Run(() => CreatePerlinNoiseArray(ref output, fromHeight, toHeight, seed)));
             }
 
             Task.WaitAll(tasks.ToArray());
@@ -90,14 +86,14 @@ namespace Interface
 
                 for (var y = fromHeight; y < fixedHeight; y++)
                 {
-                    for (var x = 0; x < Width; x++)
+                    for (var x = 0; x < Size; x++)
                     {
                         var pixel = new Vector2
                         {
                             X = (float)(x * frequency),
                             Y = (float)(y * frequency)
                         };
-                        output[y * Width + x] += (float)(CalculatePerlinNoiseValueForPixelFunc(seed, pixel) * amplitude);
+                        output[y * Size + x] += (float)(CalculatePerlinNoiseValueForPixelFunc(seed, pixel) * amplitude);
                     }
                 }
             }
