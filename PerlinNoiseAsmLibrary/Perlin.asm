@@ -1,15 +1,15 @@
-; Temat:  Szum Perlina
+; Temat:  Generator szumu Perlina
 ; Opis:	  Algorytm generuje wartość szumu Perlina dla konkretnego piksela
 ; Autor:  Mateusz Babiński, Informatyka, rok 3, sem. 5, gr. 5, data: 24.10.2022
-; Wersja: 0.4
+; Wersja: 1.0
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .data?
-	seed DWORD ?  ; wartość używana przy wyliczaniu gradientu w celu nadania losowości generowanym wynikom.
+	seed DWORD ?  ; wartość używana przy wyliczaniu gradientu w celu nadania pseudolosowości generowanym wynikom.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .const
-	vector11	   REAL4 1.0, 1.0		    ; vector2d z x = 1, y = 1
+	vector11	   REAL4 1.0, 1.0		    ; vector2d z x=1, y=1
 	pi			   REAL8 3.141592653589793  ; pi
 	intMaxPlusOne  REAL8 2147483648.0       ; maksymalna wartość integera + 1
 	three		   REAL4 3.0
@@ -21,7 +21,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Interpolacja za pomocą wzoru: (y - x) * (3 - 2 * w) * w * w + x, gdzie x i y to współrzędne piksela a parametr w to waga interpolacji.
-; Piksel znajduje się w rejestrze xmm0 (xmmo[0-31] = x i xmm0[32-63] = y) oraz parametr w znajduje się w rejestrze xmm15.
+; Piksel znajduje się w rejestrze xmm0 (xmm0[0-31] = x i xmm0[32-63] = y) oraz parametr w znajduje się w rejestrze xmm15.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Interpolate PROC
 	movss xmm12, xmm15
@@ -49,7 +49,7 @@ Interpolate ENDP
 RandomGradient PROC
 	local temp : REAL4  ; zmienna lokalna używana w późniejszej fazie do operacji na rejestrach zmiennoprzecinkowych
 	
-	; wykonanie szeregu obliczeń według wzoru, aby otrzymać losową wartość, z której będzie liczony wektor jednostkowy
+	; wykonanie szeregu obliczeń według wzoru, aby otrzymać pseudolosową wartość, z której będzie liczony wektor jednostkowy
 	pmuldq xmm13, seed   ; pomnożenie pierwszej wartości przez seed, w celu zwiększenia losowości końcowego wektora
 	movaps xmm15, xmm13
 	movaps xmm0, xmm13
@@ -107,8 +107,9 @@ DotGridGradient PROC
 	movaps xmm15, xmm1	   ; wpisanie do rejestru xmm15 koordynat aktualnego piksela
 	subps  xmm15, xmm12	   ; odjęcie od aktualnego koordynata zwróconego wyżej wersora i wpisanie powstałego w ten sposób wektora odległości do rejestru xmm15
 
-	; obliczenie iloczynu skalarnego z rejestrów xmm0 i xmm15, trzecim parametrem jest 49, czyli 0011 0001 binarnie, gdzie 0011 oznacza, że pod uwagę przy obliczaniu 
-	; będą brane wartości [0-31] i [32-63] dla obu rejestrów a 0001, że wynik zostanie zapisany w xmm0 na dolnych 32 bitach
+	; obliczenie iloczynu skalarnego z rejestrów xmm0 i xmm15, trzecim parametrem jest 49, czyli 0011 0001 binarnie, 
+	; gdzie 0011 oznacza, że pod uwagę przy obliczaniu będą brane wartości [0-31] i [32-63] dla obu rejestrów 
+	; a 0001, że wynik zostanie zapisany w xmm0 na dolnych 32 bitach
 	dpps   xmm0, xmm15, 49 
 	ret					   ; zwrócenie wyniku w xmm0
 DotGridGradient ENDP
@@ -118,12 +119,21 @@ DotGridGradient ENDP
 ; Pierwszy parametr, czyli seed będzie w rejestrze ecx a piksel w rejestrze xmm0.
 CalculatePerlinNoiseValueForPixel PROC
 	mov      seed, ecx		   
-	movaps   xmm1, xmm0		 ; xmm1 = pixel  
-	roundps  xmm2, xmm1, 1	 ; xmm2	= vec1
+	movaps   xmm1, xmm0		 ; xmm1 = współrzędna aktualnie liczonego piksela  
+	roundps  xmm2, xmm1, 1	 ; xmm2	= vec1 - współrzędna piksela zaokrąglone do jedności
 	movaps   xmm3, xmm2		 
-	addps    xmm3, vector11  ; xmm3 = vec2  
+	addps    xmm3, vector11  ; xmm3 = vec2 - dodanie do vec1 wektora o wartościach x=1 i y=1, będzie on potrzebny do utworzenia siatki
 	movaps   xmm4, xmm1      
-	subps    xmm4, xmm2	     ; xmm4 = lerpWeights	   
+	subps    xmm4, xmm2	     ; xmm4 = lerpWeights - wagi interpolacji, obliczone poprzez odjęcie od współrzędnej piksela ich wartości zaokrąglonych do jedności
+
+	; xmm2[0-31] = vec1.x - wspołrzędna x wektora vec1, xmm2[32-63] = vec1.y - wspołrzędna y wektora vec1, 
+	; analogicznie dla innych wektorów
+	
+	; każdy piksel przekazany do algorytmu będzie tworzyć siatkę, gdzie 4 rogi siatki będa tworzyć dwa wektory:
+	; wektor n1, gdzie x to będzie wartość zwrócona z procedury DotGridGradient dla x=vec1.x i y=vec1.y i
+	; y to będzie wartość zwrócona z procedury DotGridGradient dla x=vec2.x i y=vec1.y
+	; oraz wektor n2, x to będzie wartość zwrócona z procedury DotGridGradient dla x=vec1.x i y=vec2.y i
+	; y to będzie wartość zwrócona z procedury DotGridGradient dla x=vec2.x i y=vec2.y
 
 	; obliczanie wartości y dla wektora n1
 	movss    xmm15, xmm3      
@@ -163,28 +173,40 @@ CalculatePerlinNoiseValueForPixel PROC
 	call     DotGridGradient     
 	movss    xmm6, xmm0		  ; wartość xmm5[0-31] jest równa wartości zwróconej z procedury DotGridGradient z parametrami vec1.x i vec2.y
 
-	; obliczanie wartości y dla wektora lerpBetweenPointsAndGradVec
+	; aby otrzymać wartośś końcową należy dokonać interpolacji pomiędzy punktami siatki, ktore znajdują się w wektorach n1 i n2,
+	; dlatego zostal ten etap podzielony na dwie części, najpierw obliczana jest wartość interpolacji, dla wektorów
+	; n1 i n2, nastepnie wyniki sa zapisane w nowym wektorze, na którym w kolejnym kroku będzie ponownie wywołana 
+	; prodecura interpolacji i zostanie z niej zwrócony finalny wynik
+
+	; obliczenie wartosci wektora lerpVec, gdzie x to wartosc zwrocona z procedury Interpolate
+	; dla wektora n1 z waga interpolacji rowna lerpWeights.x oraz y to wartosc zwrocona z procedury Interpolate
+	; dla wektora n2 z waga interpolacji rowna lerpWeights.x
+
+	; obliczanie wartości y dla wektora lerpVec
 	pxor xmm15, xmm15   ;xmm15 = 0
 	movss xmm15, xmm4   ;xmm15 = lerpWeights.x
 	movaps xmm0, xmm6   ;xmm0 = n2
 	call Interpolate
 	movaps xmm2, xmm0   ;xmm2[0-31] = wynik interpolacji dla y
 	pslldq xmm2, 4		;xmm2[31-62] = wynik interpolacji dla y
-	
-	; obliczanie wartości x dla wektora lerpBetweenPointsAndGradVec
+
+	; obliczanie wartości x dla wektora lerpVec
 	pxor xmm15, xmm15   ;xmm15 = 0
 	movss xmm15, xmm4   ;xmm15 = lerpWeights.x
 	movaps xmm0, xmm5   ;xmm0 = n1
 	call Interpolate
 	movss xmm2, xmm0    ;xmm2[0-31] = wynik interpolacji dla x
 
-	; obliczanie wartości końcowej szumu Perlina
+
+	; obliczanie wartości końcowej szumu Perlina, za pomoca procedury Interpolate dla parametru lerpVec 
+	; i wagi interpolacji rownej lerpWeights.y
 	psrldq xmm4, 4
 	movss  xmm15, xmm4  ;xmm15 = lerpWeights.y	
-	movaps xmm0, xmm2	;xmm0 = lerpBetweenPointsAndGradVec
+	movaps xmm0, xmm2	;xmm0 = lerpVec
 	call Interpolate
 
-	; pomnożenie zwracanego wyniku przez 0.5 a nastepnie dodanie 0.5, aby końcowy wynik był z przedziału od 0 do 1.
+	; wynik interpolacji jest w przedziale od -1 do 1 
+	; pomnożenie zwracanego wyniku przez 0.5 a nastepnie dodanie 0.5, aby końcowy wynik był z przedziału od 0 do 1
 	mulss xmm0, zeroPointFive
 	addss xmm0, zeroPointFive
 

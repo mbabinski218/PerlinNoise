@@ -81,13 +81,13 @@ namespace PerlinNoiseCsLibrary
                 Y = DotGridGradient(vec2.X, vec2.Y, pixel)
             };
 
-            var lerpBetweenPointsAndGradVec = new Vector2
+            var lerp = new Vector2
             {
                 X = Interpolate(n1, lerpWeights.X),
                 Y = Interpolate(n2, lerpWeights.X)
             };
 
-            var value = Interpolate(lerpBetweenPointsAndGradVec, lerpWeights.Y);
+            var value = Interpolate(lerp, lerpWeights.Y);
             return (float)(value * 0.5 + 0.5);
         }
     }

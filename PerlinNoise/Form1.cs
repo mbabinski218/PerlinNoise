@@ -10,19 +10,19 @@ namespace Interface
 {
     public partial class Form1 : Form
     {
-        // Ilość wątków, która zostanie przydzielona dla algorytmu generującego szum Perlina.
-        private int _numberOfThreads = 1;
+        // Ilość wątków, która zostanie przydzielona dla algorytmu generującego szum Perlina
+        private int _numberOfThreads = Environment.ProcessorCount;
 
-        // Każda oktawa dodaje warstwę szczegółów do obrazu.
+        // Każda oktawa dodaje warstwę szczegółów do obrazu
         private int _octaves = 1;
 
-        // Określa, w jakim stopniu każda oktawa ma wpływ na ogólny kształt (reguluję amplitudę).
+        // Określa, w jakim stopniu każda oktawa ma wpływ na ogólny kształt (reguluję amplitudę)
         private double _persistence = 0.001;
 
-        // Szerokość wygenerowanego obrazu.
+        // Szerokość wygenerowanego obrazu
         private int _size = 1024;
 
-        // W jakim języku będzie napisana bibloteka użyta do generowania szumu Perlina.
+        // W jakim języku będzie napisana bibloteka użyta do generowania szumu Perlina
         private Library _library = Library.Assembly;
 
         // Przechowuje obraz bmp
@@ -31,6 +31,10 @@ namespace Interface
         public Form1()
         {
             InitializeComponent();
+
+            // ustawienie początkowej wartość liczby wątków na ilość procesorów posiadanych przez komputer
+            threadTrackBar.Value = _numberOfThreads;
+            numberOfThreadsLabel.Text = _numberOfThreads.ToString();
         }
 
         private void ThreadTrackBar_Scroll(object sender, EventArgs e)
